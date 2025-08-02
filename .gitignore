@@ -13,6 +13,7 @@ yarn-error.log*
 
 # Cache files and folders
 .firebase/
+.next/
 .npm/
 .eslintcache
 
