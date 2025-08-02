@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+firebase-debug.log*
+firebase-debug.*.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache files and folders
+.firebase/
+.npm/
+.eslintcache
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.ntvs*
+*.njsproj
+*.sln
+*.suo
+*.sw?
+
+# Environment variables
+.env
+.env.production
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Misc
+.DS_Store
+coverage
+*.local
+*.tsbuildinfo
