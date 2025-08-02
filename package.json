@@ -2,13 +2,14 @@
   "name": "seo-chat-assistant",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
     "build:be": "cd app && npm run build",
     "build:fe": "cd web && npm run build",
     "build": "run-p build:*",
-    "install:be": "cd backend && npm install",
-    "install:fe": "cd frontend && npm install",
-    "postinstall": "run-p install:*",
     "start:be": "cd app && npm run start",
     "start:fe": "cd web && npm run start",
     "start": "run-p start:*"
