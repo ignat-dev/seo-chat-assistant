@@ -1,36 +1,13 @@
-import fastifyCors from '@fastify/cors';
-import fastifyJwt from '@fastify/jwt';
-import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { initializeApp, applicationDefault } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
 import routes from './routes';
-
-const fastify = Fastify();
-fastify.register(fastifyCors);
-fastify.register(fastifyJwt, { secret: 'supersecret' });
+import server from './server';
 
 initializeApp({ credential: applicationDefault() });
 
-fastify.decorate('verifyFirebaseToken', async (request: FastifyRequest, reply: FastifyReply) => {
-  const authHeader = request.headers.authorization;
-
-  if (!authHeader) {
-    return reply.status(401).send('Missing token');
+server.register(routes).listen({ port: Number(process.env.SERVER_PORT) }, err => {
+  if (err) {
+    throw err;
   }
 
-  const token = authHeader.split(' ')[1];
-
-  try {
-    const decoded = await getAuth().verifyIdToken(token);
-    request.user = decoded;
-  } catch (err) {
-    return reply.status(401).send('Invalid token');
-  }
-});
-
-fastify.register(routes);
-
-fastify.listen({ port: 3001 }, err => {
-  if (err) throw err;
-  console.log('Backend running on http://localhost:3001');
+  console.log(`Backend running on http://localhost:${process.env.SERVER_PORT}`);
 });
