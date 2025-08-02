@@ -1,0 +1,20 @@
+{
+  "name": "seo-chat-backend",
+  "version": "0.1.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.0.0",
+    "@fastify/jwt": "^7.0.0",
+    "fastify": "^4.0.0",
+    "firebase-admin": "^11.0.0",
+    "langchain": "^0.0.180",
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.0.0",
+    "typescript": "^4.0.0"
+  }
+}
