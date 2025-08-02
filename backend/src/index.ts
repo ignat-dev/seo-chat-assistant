@@ -1,6 +1,6 @@
-import Fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import fastifyJwt from '@fastify/jwt';
+import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { initializeApp, applicationDefault } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import routes from './routes';
@@ -11,10 +11,15 @@ fastify.register(fastifyJwt, { secret: 'supersecret' });
 
 initializeApp({ credential: applicationDefault() });
 
-fastify.decorate('verifyFirebaseToken', async (request, reply) => {
+fastify.decorate('verifyFirebaseToken', async (request: FastifyRequest, reply: FastifyReply) => {
   const authHeader = request.headers.authorization;
-  if (!authHeader) return reply.status(401).send('Missing token');
+
+  if (!authHeader) {
+    return reply.status(401).send('Missing token');
+  }
+
   const token = authHeader.split(' ')[1];
+
   try {
     const decoded = await getAuth().verifyIdToken(token);
     request.user = decoded;

@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 export default async function routes(fastify: FastifyInstance) {
-  fastify.get('/ping', async (request, reply) => {
+  fastify.get('/ping', async () => {
     return { hello: 'world' };
   });
 
