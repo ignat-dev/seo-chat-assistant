@@ -2,6 +2,7 @@ import fastifyCors from '@fastify/cors';
 import fastifyJwt from '@fastify/jwt';
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { getAuth } from 'firebase-admin/auth';
+import { firebaseApp } from './firebase/firebaseApp';
 
 const server = Fastify();
 
@@ -18,7 +19,7 @@ server.addHook('preHandler', async (request: FastifyRequest, reply: FastifyReply
   const token = authHeader.split(' ')[1];
 
   try {
-    request.user = await getAuth().verifyIdToken(token);
+    request.user = await getAuth(firebaseApp).verifyIdToken(token);
   } catch {
     return reply.status(401).send('Invalid token');
   }
