@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@picocss/pico": "^2.1",
     "firebase": "^12.0",
     "next": "^15.4",
     "react": "^19.0",
