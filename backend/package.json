@@ -8,10 +8,10 @@
   "dependencies": {
     "@fastify/cors": "^11.1",
     "@fastify/jwt": "^9.1",
+    "@langchain/core": "^0.3",
+    "@langchain/openai": "^0.6",
     "fastify": "^5.4",
-    "firebase-admin": "^13.4",
-    "langchain": "^0.3.30",
-    "openai": "^5.11"
+    "firebase-admin": "^13.4"
   },
   "devDependencies": {
     "ts-node": "^10.9"
