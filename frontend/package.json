@@ -11,7 +11,8 @@
     "firebase": "^12.0",
     "next": "^15.4",
     "react": "^19.0",
-    "react-dom": "^19.0"
+    "react-dom": "^19.0",
+    "sass": "^1.89"
   },
   "devDependencies": {
     "@types/react": "^19.1"
