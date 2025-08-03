@@ -22,5 +22,5 @@ const chain = prompt.pipe(model);
 export async function getSeoRecommendations(title: string, content: string): Promise<string> {
   const response = await chain.invoke({ title, content });
 
-  return response.text;
+  return response.text.trim();
 }
