@@ -1,0 +1,139 @@
+$maxWidth: 40rem;
+
+.chatWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.inputBox {
+  background-color: var(--pico-form-element-selected-background-color);
+  border-radius: var(--pico-border-radius);
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: -2rem auto 1rem auto;
+  max-width: $maxWidth;
+  overflow: hidden;
+  padding: 0.5rem;
+  width: 100%;
+
+  &:focus-within {
+    box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-form-element-focus-color);
+  }
+
+  > button {
+    align-self: flex-end;
+    display: inline-block;
+    line-height: 1.35rem;
+    margin: 0;
+    min-width: 2rem;
+    padding: 0.25rem;
+    width: auto;
+
+    &[aria-busy="true"] {
+      &::before {
+        margin: 0;
+      }
+
+      > span {
+        display: none;
+      }
+    }
+  }
+
+  > textarea {
+    background-color: transparent;
+    border: 0;
+    font-family: inherit;
+    margin: 0;
+    padding: 0 0 0 0.25rem;
+    resize: none;
+    width: 100%;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.messageListWrapper {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  overflow-y: overlay;
+  padding: 0;
+  width: 100%;
+}
+
+.messageList {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  margin-top: 1rem;
+  max-width: $maxWidth;
+  padding: 0 0 0 1rem;
+  white-space: pre-line;
+  width: 100%;
+
+  > .userMessage {
+    align-self: flex-end;
+    background-color: var(--pico-form-element-selected-background-color);
+    border-radius: 0.5rem;
+    color: var(--pico-form-element-placeholder-color);
+    max-width: 50%;
+    padding: 1rem;
+  }
+
+  > .loadingIndicator {
+    align-self: flex-start;
+    animation: loading-pulse 1s linear infinite alternate;
+    color: var(--pico-secondary-hover);
+    font-style: italic;
+    max-width: 50%;
+  }
+
+  > .scrollAnchor {
+    height: 2rem; // Accounts for the negative top margin of the input box.
+  }
+}
+
+.chatModal {
+  > article {
+    max-width: 480px;
+    width: 50%;
+
+    > header {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    > footer {
+      background-color: transparent;
+      text-align: center;
+
+      > button {
+        padding: 0.5rem 1.5rem;
+      }
+    }
+
+    > p {
+      min-height: 80px;
+    }
+  }
+}
+
+@keyframes loading-pulse {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.25;
+  }
+}
