@@ -1,0 +1,17 @@
+.authFormWrapper {
+  margin: 2rem auto;
+  margin-top: clamp(80px, 10vh, 200px);
+  max-width: 400px;
+
+  > p {
+    margin-bottom: 0;
+  }
+}
+
+.authForm {
+  margin: 2rem 0;
+
+  > button {
+    margin-bottom: 0;
+  }
+}
