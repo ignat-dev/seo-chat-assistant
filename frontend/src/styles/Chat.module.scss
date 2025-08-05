@@ -8,7 +8,7 @@ $maxWidth: 40rem;
   position: relative;
 }
 
-.inputBox {
+.chatBox {
   background-color: var(--pico-form-element-selected-background-color);
   border-radius: var(--pico-border-radius);
   display: flex;
@@ -60,7 +60,7 @@ $maxWidth: 40rem;
   }
 }
 
-.messageListWrapper {
+.chatArea {
   display: flex;
   flex: 1 1 auto;
   justify-content: center;
