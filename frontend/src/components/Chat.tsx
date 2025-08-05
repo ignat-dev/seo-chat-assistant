@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../lib/api';
+import { Message, MessageData, MessageSender } from '../types';
+import ChatMessage from './ChatMessage';
 
 import styles from '../styles/Chat.module.scss';
 
@@ -11,14 +13,14 @@ const Chat = () => {
   const [error, setError] = useState('');
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState<{ sender: string; content: string }[]>([]);
+  const [messages, setMessages] = useState<Array<MessageData>>([]);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>('auto');
   const scrollAnchorRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     setLoading(true);
-    api.get<{ messages: Array<{ sender: string; content: string }> }>('/messages')
+    api.get<{ messages: Array<Message> }>('/messages')
       .then(({ messages }) => {
         setMessages(messages);
         focusTextarea();
@@ -60,6 +62,10 @@ const Chat = () => {
     }
   };
 
+  const createMessage = (content: string, sender: MessageSender): MessageData => {
+    return { content, sender, timestamp: Date.now() };
+  };
+
   const handleSubmit = async (e?: React.FormEvent) => {
     const message = input.trim();
 
@@ -73,13 +79,13 @@ const Chat = () => {
       setLoading(true);
 
       // Append the user message immediately, for better UX.
-      setMessages((prev) => [...prev, { sender: 'user', content: message }]);
+      setMessages((prev) => [...prev, createMessage(message, MessageSender.USER)]);
       setInput('');
       focusTextarea();
 
       const { response } = await api.post<{ response: string }>('/messages', { message });
 
-      setMessages((prev) => [...prev, { sender: 'ai', content: response }]);
+      setMessages((prev) => [...prev, createMessage(response, MessageSender.AI)]);
     } catch (ex) {
       console.error('Error submitting message:', ex);
       setError(ex.message ?? ex)
@@ -120,10 +126,8 @@ const Chat = () => {
     <div className={styles.chatWrapper}>
       <div className={styles.messageListWrapper}>
         <div className={styles.messageList}>
-          {messages.map((msg, idx) => (
-            <div key={idx} className={msg.sender === 'user' ? styles.userMessage : ''}>
-              {msg.content}
-            </div>
+          {messages.map((message, idx) => (
+            <ChatMessage key={idx} message={message} />
           ))}
           {loading && (
             <div className={styles.loadingIndicator}>

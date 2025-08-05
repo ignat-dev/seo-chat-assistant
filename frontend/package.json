@@ -13,6 +13,8 @@
     "next": "^15.4",
     "react": "^19.0",
     "react-dom": "^19.0",
+    "react-markdown": "^10.1",
+    "remark-gfm": "^4.0",
     "sass": "^1.89"
   },
   "devDependencies": {
