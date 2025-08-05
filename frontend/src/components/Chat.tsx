@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { api } from '../lib/api';
 import { Message, MessageData, MessageSender } from '../types';
 import ChatMessage from './ChatMessage';
+import ErrorModal from './ErrorModal';
 
 import styles from '../styles/Chat.module.scss';
 
@@ -158,22 +159,7 @@ const Chat = () => {
         </button>
       </form>
 
-      <dialog className={styles.chatModal} open={!!error}>
-        <article>
-          <header>
-            <strong>⚠ Unexpected error occured!</strong>
-            <button aria-label="Close" rel="prev" onClick={handleModalClose}></button>
-          </header>
-          <p>
-            {error}
-          </p>
-          <footer>
-            <button className="secondary" onClick={handleModalClose}>
-              Close
-            </button>
-          </footer>
-        </article>
-      </dialog>
+      <ErrorModal error={error} onClose={handleModalClose} />
     </div>
   );
 };

@@ -1,0 +1,25 @@
+.errorModal {
+  > article {
+    max-width: 480px;
+    width: 50%;
+
+    > header {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    > footer {
+      background-color: transparent;
+      text-align: center;
+
+      > button {
+        padding: 0.5rem 1.5rem;
+      }
+    }
+
+    > p {
+      min-height: 80px;
+    }
+  }
+}
