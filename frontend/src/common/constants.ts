@@ -8,3 +8,7 @@ export const RouteName = {
   signOut: '/signout',
   signUp: '/signup',
 };
+
+export const StorageKey = {
+  theme: 'theme',
+};
