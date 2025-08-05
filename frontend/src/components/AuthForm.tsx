@@ -3,11 +3,14 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { AppInfo, RouteName } from '../common/constants';
 import { firebaseAuth } from '../lib/firebase';
+import ErrorModal from './ErrorModal';
 
 import styles from '../styles/AuthForm.module.scss';
 
 const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const isSignIn = mode === 'signin';
@@ -49,6 +52,7 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
     }
 
     try {
+      setLoading(true);
       await (
         isSignIn
           ? signInWithEmailAndPassword(firebaseAuth, email, password)
@@ -56,9 +60,16 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
       );
       router.push(isSignIn ? RouteName.chat : RouteName.signIn);
     } catch (ex) {
-      // TODO: Display the error to the user.
       console.error(ex);
+      setError(ex.message ?? ex);
+    } finally {
+      // Delay a bit, while the routing happens.
+      setTimeout(() => setLoading(false), 1000);
     }
+  };
+
+  const handleModalClose = () => {
+    setError('');
   };
 
   return (
@@ -72,6 +83,7 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
       <form className={styles.authForm} onSubmit={handleSubmit}>
         <input
           placeholder="Email"
+          readOnly={loading}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -80,6 +92,7 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
           aria-describedby={isSignIn ? undefined : 'invalid-password'}
           aria-invalid={isSignIn ? undefined : showPasswordError}
           placeholder="Password"
+          readOnly={loading}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -95,6 +108,7 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
               aria-describedby="invalid-repeat-password"
               aria-invalid={showRepeatPasswordError}
               placeholder="Repeat password"
+              readOnly={loading}
               type="password"
               value={repeatPassword}
               onChange={(e) => setRepeatPassword(e.target.value)}
@@ -106,7 +120,7 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
             )}
           </>
         )}
-        <button disabled={!isFormValid} type="submit">
+        <button aria-busy={loading} disabled={loading || !isFormValid} type="submit">
           {isSignIn ? 'Sign in' : 'Sign up'}
         </button>
       </form>
@@ -114,6 +128,8 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
       <a href={isSignIn ? RouteName.signUp : RouteName.signIn}>
         {isSignIn ? 'Need an account? Sign up.' : 'Already have an account? Sign in.'}
       </a>
+
+      <ErrorModal error={error} onClose={handleModalClose} />
     </div>
   );
 };
