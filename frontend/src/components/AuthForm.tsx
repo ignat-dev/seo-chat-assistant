@@ -1,13 +1,12 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
-import { RouteName, AppInfo } from '../common/constants';
-import { firebaseApp } from '../lib/firebase';
+import { AppInfo, RouteName } from '../common/constants';
+import { firebaseAuth } from '../lib/firebase';
 
 import styles from '../styles/AuthForm.module.scss';
 
 const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
-  const auth = getAuth(firebaseApp);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
@@ -52,8 +51,8 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
     try {
       await (
         isSignIn
-          ? signInWithEmailAndPassword(auth, email, password)
-          : createUserWithEmailAndPassword(auth, email, password)
+          ? signInWithEmailAndPassword(firebaseAuth, email, password)
+          : createUserWithEmailAndPassword(firebaseAuth, email, password)
       );
       router.push(isSignIn ? RouteName.chat : RouteName.signIn);
     } catch (ex) {
