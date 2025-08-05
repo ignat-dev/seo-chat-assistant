@@ -138,7 +138,7 @@ const Chat = () => {
         <textarea
           autoFocus={true}
           disabled={loading}
-          placeholder="Enter title on the first line, and content below... (Ctrl+Enter to submit)"
+          placeholder="Enter page title and content in free text... (Ctrl+Enter to submit)"
           ref={textareaRef}
           rows={2}
           value={input}
