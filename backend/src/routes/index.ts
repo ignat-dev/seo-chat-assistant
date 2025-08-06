@@ -1,9 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import { saveMessage, getMessages } from '../services/firestoreService';
 import { getSeoRecommendations } from '../services/seoService';
-import { MessageSender } from '../types/MessageSender';
-import { ServerReply } from '../types/ServerReply';
-import { ServerRequest } from '../types/ServerRequest';
+import { MessageSender, ServerReply, ServerRequest } from '../types';
+import { delayAsyncExecution } from '../utils';
 
 export default async function routes(server: FastifyInstance) {
   const AI_RESPONSE_DELAY = 3000;
@@ -57,11 +56,5 @@ export default async function routes(server: FastifyInstance) {
       console.error(ex);
       reply.code(500).send('Something went wrong');
     }
-  });
-}
-
-function delayAsyncExecution(delayInMs: number = 1000): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delayInMs);
   });
 }

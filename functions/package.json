@@ -1,0 +1,30 @@
+{
+  "name": "seo-chat-functions",
+  "version": "0.1.0",
+  "main": "index.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.1",
+    "@langchain/core": "^0.3",
+    "@langchain/openai": "^0.6",
+    "backend": "*",
+    "fastify": "^5.4",
+    "firebase-admin": "^13.4",
+    "firebase-functions": "^6.4"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25"
+  },
+  "engines": {
+    "node": "22"
+  }
+}

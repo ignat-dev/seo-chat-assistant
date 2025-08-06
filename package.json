@@ -4,18 +4,21 @@
   "private": true,
   "workspaces": [
     "backend",
-    "frontend"
+    "frontend",
+    "functions"
   ],
   "scripts": {
-    "build:be": "cd app && npm run build",
-    "build:fe": "cd web && npm run build",
-    "build": "run-p build:*",
-    "start:be": "cd app && npm run start",
-    "start:fe": "cd web && npm run start",
-    "start": "run-p start:*"
+    "build": "npm run build:be && npm run build:fe",
+    "build:be": "cd functions && npm run build",
+    "build:fe": "cd frontend && npm run build",
+    "deploy": "npm run deploy:be && npm run deploy:fe",
+    "deploy:be": "npm run build:be && firebase deploy --only functions,firestore:indexes,firestore:rules",
+    "deploy:fe": "npm run build:fe && firebase deploy --only hosting",
+    "start": "npm run start:be & npm run start:fe",
+    "start:be": "cd backend && npm run dev",
+    "start:fe": "cd frontend && npm run dev"
   },
   "devDependencies": {
-    "dotenv": "^17.2",
     "npm-run-all2": "^8.0",
     "typescript": "^5.9"
   }

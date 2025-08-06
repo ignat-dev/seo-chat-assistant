@@ -3,17 +3,19 @@
   "version": "0.1.0",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "ts-node -r dotenv/config src/index.ts"
+    "build": "tsc",
+    "dev": "dotenv -e .env.local -- ts-node src/index.ts",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@fastify/cors": "^11.1",
-    "@fastify/jwt": "^9.1",
     "@langchain/core": "^0.3",
     "@langchain/openai": "^0.6",
     "fastify": "^5.4",
     "firebase-admin": "^13.4"
   },
   "devDependencies": {
+    "dotenv-cli": "^10.0",
     "ts-node": "^10.9"
   }
 }

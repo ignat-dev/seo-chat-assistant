@@ -1,10 +1,13 @@
-import routes from './routes';
 import server from './server';
 
-server.register(routes).listen({ port: Number(process.env.SERVER_PORT) }, err => {
-  if (err) {
-    throw err;
-  }
+if (!process.env.NODE_ENV?.startsWith('prod')) {
+  server.listen({ port: Number(process.env.SERVER_PORT) }, err => {
+    if (err) {
+      throw err;
+    }
 
-  console.log(`Backend running on http://localhost:${process.env.SERVER_PORT}`);
-});
+    console.log(`API is running locally on http://localhost:${process.env.SERVER_PORT}`);
+  });
+}
+
+export { server as fastify };

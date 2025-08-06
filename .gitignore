@@ -1,6 +1,11 @@
 # Dependencies
 node_modules/
 
+# Build output folders
+backend/out/
+frontend/dist/
+functions/lib/
+
 # Logs
 logs
 *.log
@@ -29,7 +34,8 @@ yarn-error.log*
 
 # Environment variables
 .env
-.env.production
+.env.*
+!.env.template
 
 # Runtime data
 pids

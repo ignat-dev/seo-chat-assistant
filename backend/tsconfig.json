@@ -11,6 +11,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "noEmit": true,
+    "outDir": "out",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,6 +21,7 @@
     "node_modules"
   ],
   "include": [
+    "**/*.d.ts",
     "**/*.ts"
   ],
   "ts-node": {

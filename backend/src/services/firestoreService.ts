@@ -1,7 +1,6 @@
 import { CollectionReference } from "firebase-admin/firestore";
 import { firestore as db } from "../firebase/firestore";
-import { Message } from "../types/Message";
-import { MessageData } from "../types/MessageData";
+import { Message, MessageData } from "../types";
 
 export async function getMessages(userId: string): Promise<Array<Message>> {
   const snapshot = await getMessagesCollectionForUser(userId).orderBy("timestamp").get();
