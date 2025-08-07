@@ -27,7 +27,13 @@ fastify.addHook("onResponse", (req, reply, done) => {
 // Start writing functions:
 // https://firebase.google.com/docs/functions/typescript
 
-export const api = onRequest(async (request, response) => {
+export const api = onRequest(
+  {
+    // Allow the function to be publicly invokable.
+    // Authentication is handled by the API itself.
+    invoker: 'public',
+  },
+  async (request, response) => {
   try {
     await fastify.ready();
     fastify.server.emit("request", request, response);

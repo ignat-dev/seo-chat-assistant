@@ -128,7 +128,7 @@ Firestore rules and indexes are located in `firestore.rules` and `firestore.inde
 
 #### Backend API Integration
 
-To configure a custom backend server port in set the `SERVER_PORT` environment variable in `backend/.env.local` and update `NEXT_PUBLIC_BACKEND_API_URL` in `frontend/.env.local` accordingly.
+To configure a custom backend server port in set the `SERVER_PORT` environment variable in `backend/.env.local` and also update `NEXT_PUBLIC_API_SERVER_PORT` variable in `frontend/.env.local` accordingly.
 
 
 ### Command Reference

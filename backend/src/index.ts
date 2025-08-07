@@ -6,7 +6,10 @@ if (!process.env.NODE_ENV?.startsWith('prod')) {
       throw err;
     }
 
-    console.log(`API is running locally on http://localhost:${process.env.SERVER_PORT}`);
+    const port = process.env.SERVER_PORT;
+    const name = process.env.GOOGLE_CLOUD_FUNCTION_NAME;
+
+    console.log(`API is running locally on http://localhost:${port}/${name}`);
   });
 }
 

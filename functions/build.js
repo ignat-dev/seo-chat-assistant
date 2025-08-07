@@ -1,18 +1,16 @@
 // @ts-check
 import { build, formatMessages } from 'esbuild';
-import { copyFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, copyFileSync, existsSync } from 'fs';
 
 try {
   // Copy `.env.local` from backend folder before build.
-  const envSrc = '../backend/.env.local';
-  const envDest = '../functions/.env';
+  copyEnvFile('../backend/.env.local', '../functions/.env', {
+    // Remove this variable because the credentials file is not present
+    // in the cloud environment and when Firebase default implmentation
+    // tries to load it, since it's present, it crashes the process.
+    GOOGLE_APPLICATION_CREDENTIALS: '',
+  });
 
-  if (existsSync(envSrc)) {
-    copyFileSync(envSrc, envDest);
-    console.log(`✅ Copied ${envSrc} to ${envDest}.`);
-  } else {
-    console.warn(`⚠ No .env.local file found at ${envSrc}.`);
-  }
 
   const startTime = performance.now();
   const result = await build({
@@ -20,6 +18,10 @@ try {
       js: 'import { createRequire } from "module"; const require = createRequire(import.meta.url);',
     },
     bundle: true,
+    define: {
+      'process.env.GOOGLE_APPLICATION_CREDENTIALS': 'undefined',
+      'process.env.NODE_ENV': '"production"',
+    },
     entryPoints: ['../backend/src/server.ts'],
     external: [
       '@fastify/cors',
@@ -34,6 +36,7 @@ try {
     platform: 'node',
     sourcemap: true,
     target: 'node22',
+    treeShaking: true,
   });
 
   const endTime = performance.now();
@@ -53,4 +56,43 @@ try {
       : ex
   );
   process.exit(1);
+}
+
+
+/**
+ * Copies an environment file, with optional overrides for specific variables.
+ *
+ * @param {string} srcPath - Path to the source `.env` file.
+ * @param {string} destPath - Path to write the new `.env` file.
+ * @param {Record<string, string>} [overrideMap] - Optional map of env var overrides.
+ */
+function copyEnvFile(srcPath, destPath, overrideMap) {
+  if (!existsSync(srcPath)) {
+    console.warn(`⚠ Source file does not exist: ${srcPath}`);
+    return;
+  }
+
+  if (!overrideMap) {
+    copyFileSync(srcPath, destPath);
+    console.log(`✅ Copied ${srcPath} to ${destPath}.`);
+    return;
+  }
+
+  const rawEnv = readFileSync(srcPath, 'utf8');
+
+  const updatedEnv = rawEnv .split('\n') .map((line) => {
+    const trimmed = line.trim();
+
+    // Skip empty lines or line comments.
+    if (!trimmed || trimmed.startsWith('#')) {
+      return line;
+    }
+
+    const key = line.split('=')[0].trim();
+
+    return overrideMap.hasOwnProperty(key) ? `${key}=${overrideMap[key]}` : line;
+  }).join('\n');
+
+  writeFileSync(destPath, updatedEnv);
+  console.log(`✅ Copied ${srcPath} to ${destPath}.`);
 }

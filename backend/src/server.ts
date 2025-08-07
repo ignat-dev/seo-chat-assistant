@@ -35,6 +35,7 @@ server.addContentTypeParser('application/json', {}, (req: any, payload: any, don
   done(null, payload.body);
 });
 
-server.register(routes);
+// Add prefix to routes to unify the access between local and cloud environment.
+server.register(routes, { prefix: `/${process.env.GOOGLE_CLOUD_FUNCTION_NAME}` });
 
 export default server;
