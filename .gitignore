@@ -4,6 +4,7 @@ node_modules/
 # Build output folders
 backend/out/
 frontend/dist/
+functions/config/
 functions/lib/
 
 # Logs

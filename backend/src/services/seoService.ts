@@ -7,26 +7,17 @@ import {
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { ChatOpenAI } from "@langchain/openai";
 import { firestore } from "../firebase/firestore";
+import { getModelConfig, getSystemPrompt } from "./configurationService";
 import { FirestoreMemory } from "./firestoreMemory";
 
 const HISTORY_MESSAGES_KEY = "history";
 const INPUT_MESSAGES_KEY = "input";
 
-const systemPrompt = `
-  You are an SEO optimization assistant. The user will give you free text. Your tasks:
-    1. Try to detect a "page title" and "page content" from the conversation.
-    2. If either is missing, ask the user to provide the missing part — conversationally.
-    3. Once both are available, respond with:
-      - Improved page title
-      - Suggested meta description
-      - Suggested improvements to the content
-  Always keep the interaction friendly and in a chat style.
-`;
+const systemPrompt = getSystemPrompt();
 
 const model = new ChatOpenAI({
+  ...getModelConfig(),
   apiKey: process.env.OPENAI_API_KEY,
-  model: "gpt-4o-mini",
-  temperature: 0.7,
 });
 
 const prompt = ChatPromptTemplate.fromMessages([

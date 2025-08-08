@@ -1,6 +1,6 @@
 // @ts-check
 import { build, formatMessages } from 'esbuild';
-import { readFileSync, writeFileSync, copyFileSync, existsSync } from 'fs';
+import { copyFileSync, cpSync, existsSync, readFileSync, writeFileSync } from 'fs';
 
 try {
   // Copy `.env.local` from backend folder before build.
@@ -11,11 +11,18 @@ try {
     GOOGLE_APPLICATION_CREDENTIALS: '',
   });
 
+  copyDirSync('../backend/src/config', './config');
+
+  console.log('✅ Copied configuration files!');
 
   const startTime = performance.now();
   const result = await build({
     banner: {
-      js: 'import { createRequire } from "module"; const require = createRequire(import.meta.url);',
+      js: `
+        import { createRequire } from "module";
+        const require = createRequire(import.meta.url);
+        const __dirname = import.meta.dirname;
+      `,
     },
     bundle: true,
     define: {
@@ -80,7 +87,7 @@ function copyEnvFile(srcPath, destPath, overrideMap) {
 
   const rawEnv = readFileSync(srcPath, 'utf8');
 
-  const updatedEnv = rawEnv .split('\n') .map((line) => {
+  const updatedEnv = rawEnv.split('\n').map((line) => {
     const trimmed = line.trim();
 
     // Skip empty lines or line comments.
@@ -95,4 +102,14 @@ function copyEnvFile(srcPath, destPath, overrideMap) {
 
   writeFileSync(destPath, updatedEnv);
   console.log(`✅ Copied ${srcPath} to ${destPath}.`);
+}
+
+/**
+ * Copies entire folder from source path to specified destination path.
+ *
+ * @param {string} srcPath - Path to the source folder.
+ * @param {string} destPath - Path to the destination.
+ */
+function copyDirSync(srcPath, destPath) {
+  cpSync(srcPath, destPath, { recursive: true });
 }

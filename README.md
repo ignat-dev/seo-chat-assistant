@@ -11,6 +11,7 @@
 seo-chat-assistant/
 ├── backend/                          # Backend project (Fastify)
 │   └── src/
+│       ├── config/
 │       ├── firebase/
 │       ├── routes/
 │       ├── services/
@@ -102,6 +103,19 @@ Both `backend` and `frontend` have `.env.template` files. Copy and rename them t
 
 Obtain an **OpenAI API Key** from https://platform.openai.com/ and set `OPENAI_API_KEY` in the `backend/.env.local` file. This is required for backend AI agent integration.
 
+#### AI Model Configuration
+
+The configuration files for the AI model are located in `backend/src/config`. They contain settings that control the behavior and quality of the AI assistant. By adjusting them you can fine-tune the assistant's output and ensure it aligns with your SEO strategy.
+
+- **modelConfig.json** - specifies the AI model and its behavior.
+  - **model**: The OpenAI model to use (e.g., `gpt-4o-mini`).
+  - **temperature**: Controls randomness/creativity of responses (higher = more creative).
+
+- **systemPrompt.md**
+  - Contains the system prompt that guides the AI's behavior and instructions for the SEO assistant.
+  - This prompt is sent to the model at the start of each conversation, ensuring consistent and context-aware responses.
+  - You can customize this file to change the assistant's tone, style, or task focus.
+
 #### Firebase
 
 Firebase project configuration is located in `firebase.json` in the root folder.
@@ -155,7 +169,7 @@ To configure a custom backend server port in set the `SERVER_PORT` environment v
 
 ## AI Agent Integration
 
-- **Model**: OpenAI GPT-4o
+- **Model**: OpenAI GPT-4o (configurable via `backend/src/config/modelConfig.json`).
 - **Library**: LangChain (conversation management, prompt templates)
 - **Configuration**: Set `OPENAI_API_KEY` in `backend/.env.local`.
 - **Usage**: The backend exposes endpoints for chat, the frontend interacts via API.
