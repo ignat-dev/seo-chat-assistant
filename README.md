@@ -123,7 +123,11 @@ The configuration files for the AI model are located in `backend/src/config`. Th
 
 #### Firebase
 
-Firebase project configuration is located in `firebase.json` in the root folder.
+Firebase project configuration is located in `firebase.json` in the root folder. This is the main configuration file for Firebase services and deployment and contains configuration for Firestore, Cloud Functions, Firebase Hosting, and the emulators (for local testing). Update this file according to your Firebase project's configuration.
+
+Also, there's `.firebaserc` file that specifies the default Firebase project for CLI commands and deployments. It ensures that all Firebase operations target the intended project. Change this to match your Firebase project's name.
+
+After configuring the above files, there are a few more steps to enable the Firebase integration:
 
 - For local development, download **Firebase Service Account** JSON from Firebase Console. Set the path in the `backend/.env.local` file:
 
