@@ -33,23 +33,11 @@ export default async function routes(server: FastifyInstance) {
     }
 
     try {
-      await saveMessage(userId, {
-        content: message,
-        sender: MessageSender.USER,
-        timestamp: Date.now(),
-      });
-
       // Delay the response a bit in case the AI agent responds too quickly.
       const [response] = await Promise.all([
         getSeoRecommendations(message, userId),
         delayAsyncExecution(AI_RESPONSE_DELAY),
       ]);
-
-      await saveMessage(userId, {
-        content: response,
-        sender: MessageSender.AI,
-        timestamp: Date.now(),
-      });
 
       return { response };
     } catch (ex) {

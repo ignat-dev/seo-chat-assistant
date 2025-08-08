@@ -1,5 +1,6 @@
 import { CollectionReference } from "firebase-admin/firestore";
 import { firestore as db } from "../firebase/firestore";
+import { DbCollection } from "../common/constants";
 import { Message, MessageData } from "../types";
 
 export async function getMessages(userId: string): Promise<Array<Message>> {
@@ -15,5 +16,5 @@ export async function saveMessage(userId: string, data: MessageData): Promise<vo
 }
 
 function getMessagesCollectionForUser(userId: string): CollectionReference {
-  return db.collection("users").doc(userId).collection("messages");
+  return db.collection(DbCollection.Users).doc(userId).collection(DbCollection.Messages);
 }

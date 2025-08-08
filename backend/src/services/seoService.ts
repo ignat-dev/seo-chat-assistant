@@ -1,4 +1,3 @@
-import { InMemoryChatMessageHistory } from "@langchain/core/chat_history";
 import {
   ChatPromptTemplate,
   HumanMessagePromptTemplate,
@@ -7,6 +6,11 @@ import {
 } from "@langchain/core/prompts";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { ChatOpenAI } from "@langchain/openai";
+import { firestore } from "../firebase/firestore";
+import { FirestoreMemory } from "./firestoreMemory";
+
+const HISTORY_MESSAGES_KEY = "history";
+const INPUT_MESSAGES_KEY = "input";
 
 const systemPrompt = `
   You are an SEO optimization assistant. The user will give you free text. Your tasks:
@@ -27,26 +31,15 @@ const model = new ChatOpenAI({
 
 const prompt = ChatPromptTemplate.fromMessages([
   SystemMessagePromptTemplate.fromTemplate(systemPrompt),
-  new MessagesPlaceholder("history"),
-  HumanMessagePromptTemplate.fromTemplate("{input}"),
+  new MessagesPlaceholder(HISTORY_MESSAGES_KEY),
+  HumanMessagePromptTemplate.fromTemplate(`{${INPUT_MESSAGES_KEY}}`),
 ]);
-
-// Message history store (could be per user/session).
-const sessionHistoryMap = new Map<string, InMemoryChatMessageHistory>();
-
-function getMessageHistory(sessionId: string): InMemoryChatMessageHistory {
-  if (!sessionHistoryMap.has(sessionId)) {
-    sessionHistoryMap.set(sessionId, new InMemoryChatMessageHistory());
-  }
-
-  return sessionHistoryMap.get(sessionId)!;
-}
 
 const chain = new RunnableWithMessageHistory({
   runnable: prompt.pipe(model),
-  getMessageHistory,
-  historyMessagesKey: "history",
-  inputMessagesKey: "input",
+  getMessageHistory: (sessionId) => new FirestoreMemory({ firestore, sessionId }),
+  historyMessagesKey: HISTORY_MESSAGES_KEY,
+  inputMessagesKey: INPUT_MESSAGES_KEY,
 });
 
 
