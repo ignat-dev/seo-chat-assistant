@@ -1,0 +1,87 @@
+# SEO Guidelines and Best Practices
+
+## Title Optimization
+- Keep titles under 60 characters to avoid truncation in search results.
+- Place the primary keyword as close to the beginning of the title as possible.
+- Ensure every page has a unique title tag.
+- Avoid keyword stuffing in titles.
+- Use brand name at the end of the title if space allows.
+- Write titles that accurately describe the content.
+- Include power words to encourage clicks.
+- Use numbers when relevant (e.g., "10 Tips for...").
+- Avoid vague titles like "Home" or "Welcome".
+- Capitalize major words for readability.
+- Use separators like `|` or `-` for clarity.
+- Target search intent within the title.
+- Avoid duplicate titles across the site.
+- Ensure the title matches the on-page `H1` closely.
+- Incorporate location-based keywords for local SEO.
+- Avoid clickbait that misleads the user.
+- Make titles emotionally engaging where possible.
+- Test variations for higher CTR.
+- Avoid all caps (hard to read).
+- Use descriptive language, not generic terms.
+
+## Content Optimization
+- Target one primary keyword per page.
+- Include the primary keyword in the first 100 words.
+- Write at least 300 words for each indexed page.
+- Use short paragraphs for readability.
+- Break up content with subheadings (H2, H3).
+- Include related keywords naturally.
+- Avoid keyword stuffing.
+- Use bullet points and numbered lists where appropriate.
+- Add internal links to relevant pages.
+- Include external links to authoritative sources.
+- Write for humans first, search engines second.
+- Ensure content answers the search intent.
+- Use synonyms and variations of keywords.
+- Include multimedia (images, videos) to enhance engagement.
+- Optimize images with descriptive alt text.
+- Ensure mobile-friendly formatting.
+- Keep sentences concise.
+- Avoid duplicate content within the site.
+- Regularly update older content.
+- Use active voice where possible.
+- Include a clear call-to-action.
+- Avoid jargon unless necessary for the audience.
+- Use storytelling for engagement.
+- Highlight key information with bold or italics.
+- Avoid excessive ads within the content.
+- Ensure content loads quickly.
+- Include table of contents for long articles.
+- Use schema markup when relevant.
+- Provide definitions for complex terms.
+- Test readability with online tools.
+- Write meta descriptions manually for better control.
+- Include FAQs for long-tail keywords.
+- Answer "People Also Ask" questions.
+- Add shareable quotes or snippets.
+- Test different content formats.
+- Ensure proper grammar and spelling.
+- Localize content for specific markets.
+- Link to your most important pages frequently.
+- Use canonical tags for duplicate URLs.
+- Ensure consistent tone of voice.
+
+## Metadata Optimization
+- Write meta descriptions under 155 characters.
+- Include primary keyword in meta description.
+- Ensure meta descriptions are unique per page.
+- Use compelling language to improve CTR.
+- Avoid duplicating meta description text across pages.
+- Include secondary keywords naturally.
+- Avoid vague meta descriptions like "Welcome to our site".
+- Incorporate benefits or unique selling points.
+- Ensure metadata matches page content.
+- Include brand name in description where relevant.
+- Use structured data for rich snippets.
+- Add Open Graph tags for better social sharing.
+- Include Twitter Card metadata for Twitter previews.
+- Avoid excessive punctuation in metadata.
+- Ensure meta description supports search intent.
+- Use geo-targeted keywords for local SEO.
+- Avoid repeating keywords unnecessarily.
+- Keep metadata human-readable and engaging.
+- Include numbers or statistics for more clicks.
+- Test meta descriptions for CTR improvement.

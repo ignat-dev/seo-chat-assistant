@@ -7,13 +7,14 @@ import {
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { ChatOpenAI } from "@langchain/openai";
 import { firestore } from "../firebase/firestore";
-import { getModelConfig, getSystemPrompt } from "./configurationService";
+import { getModelConfig, getSeoGuidelines, getSystemPrompt } from "./configurationService";
 import { FirestoreMemory } from "./firestoreMemory";
 
 const HISTORY_MESSAGES_KEY = "history";
 const INPUT_MESSAGES_KEY = "input";
 
 const systemPrompt = getSystemPrompt();
+const seoGuidelines = getSeoGuidelines();
 
 const model = new ChatOpenAI({
   ...getModelConfig(),
@@ -22,6 +23,7 @@ const model = new ChatOpenAI({
 
 const prompt = ChatPromptTemplate.fromMessages([
   SystemMessagePromptTemplate.fromTemplate(systemPrompt),
+  SystemMessagePromptTemplate.fromTemplate(seoGuidelines),
   new MessagesPlaceholder(HISTORY_MESSAGES_KEY),
   HumanMessagePromptTemplate.fromTemplate(`{${INPUT_MESSAGES_KEY}}`),
 ]);

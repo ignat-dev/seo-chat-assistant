@@ -111,6 +111,11 @@ The configuration files for the AI model are located in `backend/src/config`. Th
   - **model**: The OpenAI model to use (e.g., `gpt-4o-mini`).
   - **temperature**: Controls randomness/creativity of responses (higher = more creative).
 
+- **seoGuidelines.md**
+  - A comprehensive reference of SEO best practices and guidelines.
+  - The assistant uses these guidelines to generate optimized titles, content, and metadata.
+  - You can update this file to adjust the SEO rules, or add new ones.
+
 - **systemPrompt.md**
   - Contains the system prompt that guides the AI's behavior and instructions for the SEO assistant.
   - This prompt is sent to the model at the start of each conversation, ensuring consistent and context-aware responses.

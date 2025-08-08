@@ -2,10 +2,15 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 
 const MODEL_CONFIG_PATH = "../config/modelConfig.json";
+const SEO_GUIDELINES_PATH = "../config/seoGuidelines.md";
 const SYSTEM_PROMPT_PATH = "../config/systemPrompt.md";
 
 export function getModelConfig(): Record<string, unknown> {
   return loadJson(MODEL_CONFIG_PATH);
+}
+
+export function getSeoGuidelines(): string {
+  return loadFile(SEO_GUIDELINES_PATH);
 }
 
 export function getSystemPrompt(): string {
