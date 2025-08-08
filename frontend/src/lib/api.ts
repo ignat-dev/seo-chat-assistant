@@ -7,7 +7,7 @@ const API_BASE_URL = getApiBaseUrl();
 // - Retry with exponential backoff on HTTP code 500 (Server Error).
 async function makeRequest<T = object>(endpoint: string, options?: RequestInit): Promise<T> {
   const token = await getAuthToken();
-  const apiUrl = [API_BASE_URL, endpoint].join(endpoint.startsWith('/') ? '' : '/');
+  const apiUrl = joinUrlParts([API_BASE_URL, endpoint]);
   const headers: HeadersInit = {
       'Content-Type': 'application/json',
   };
@@ -49,9 +49,16 @@ function getApiBaseUrl(): string {
     const isLocalEnvironment = Boolean(port);
 
     if (isLocalEnvironment) {
-      return `${protocol}//${hostname}:${process.env.NEXT_PUBLIC_API_SERVER_PORT}`;
+      return joinUrlParts([
+        `${protocol}//${hostname}:${process.env.NEXT_PUBLIC_API_SERVER_PORT}`,
+        process.env.NEXT_PUBLIC_API_URL_PREFIX,
+      ]);
     }
   }
 
   return process.env.NEXT_PUBLIC_API_URL_PREFIX ?? '';
+}
+
+function joinUrlParts(parts: Array<string>): string {
+  return parts.map((x, i) => x.replace(i ? /^\/+|\/+$/g : /\/+$/, '')).join('/');
 }

@@ -45,7 +45,6 @@
       {
         "source": "/api/**",
         "function": "api",
-        "auth": true,
         "region": "europe-west1"
       },
       {

@@ -12,7 +12,17 @@ import fastify from "./lib/server.js";
 // This limit is a per-function limit. You can override it for each
 // function using the `maxInstances` option in the function's options,
 // e.g.: `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-setGlobalOptions({ maxInstances: 10, region: 'europe-west1' });
+setGlobalOptions({ maxInstances: 10, region: "europe-west1" });
+
+fastify.addContentTypeParser("application/json", {}, (req, payload, done) => {
+  // It's useful to include the request's raw body on the `req` object,
+  // that will later be available in the other routes, in order to
+  // calculate the HMAC, if needed.
+  req.rawBody = payload.rawBody;
+
+  // `payload.body` is the parsed JSON, so just fire the callback with it.
+  done(null, payload.body);
+});
 
 fastify.addHook("onRequest", (req, reply, done) => {
   logger.info(`Incoming request: ${req.method} ${req.url}`);
