@@ -36,6 +36,7 @@ try {
       '@langchain/openai',
       'fastify',
       'firebase-admin',
+      'langchain',
     ],
     format: 'esm',
     metafile: true,

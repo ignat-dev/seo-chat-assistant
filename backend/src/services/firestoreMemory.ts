@@ -2,6 +2,7 @@ import { BaseListChatMessageHistory } from "@langchain/core/chat_history";
 import {
   BaseMessage,
   mapStoredMessagesToChatMessages,
+  MessageType,
   StoredMessage,
   mapChatMessagesToStoredMessages,
 } from "@langchain/core/messages";
@@ -45,12 +46,12 @@ export class FirestoreMemory extends BaseListChatMessageHistory {
 
     this.getCollection().add({
       content: storedMessage.data.content,
-      sender: this.messageTypeToSender(storedMessage.type),
+      sender: this.messageTypeToSender(storedMessage.type as MessageType),
       timestamp: Date.now(),
     });
   }
 
-  async getMessages(): Promise<BaseMessage[]> {
+  async getMessages(): Promise<Array<BaseMessage>> {
     const querySnapshot = await this.getCollection().orderBy("timestamp", "asc").get();
     const response: Array<StoredMessage> = querySnapshot.docs.map((doc) => {
       const { sender, content } = doc.data();
@@ -71,9 +72,9 @@ export class FirestoreMemory extends BaseListChatMessageHistory {
     return this.document.collection(DbCollection.Messages);
   }
 
-  private messageTypeToSender(messageType: string): MessageSender {
+  private messageTypeToSender(messageType: MessageType): MessageSender {
     switch (messageType) {
-      case 'human':
+      case "human":
         return MessageSender.USER;
 
       default:
@@ -81,13 +82,13 @@ export class FirestoreMemory extends BaseListChatMessageHistory {
     }
   }
 
-  private senderToMessageType(sender: string): string {
+  private senderToMessageType(sender: string): MessageType {
     switch (sender) {
       case MessageSender.USER:
-        return 'human';
+        return "human";
 
       default:
-        return sender;
+        return "ai";
     }
   }
 }

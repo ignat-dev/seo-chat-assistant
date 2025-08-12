@@ -9,6 +9,7 @@ import { ChatOpenAI } from "@langchain/openai";
 import { firestore } from "../firebase/firestore";
 import { getModelConfig, getSeoGuidelines, getSystemPrompt } from "./configurationService";
 import { FirestoreMemory } from "./firestoreMemory";
+import { SmartMemory } from "./smartMemory";
 
 const HISTORY_MESSAGES_KEY = "history";
 const INPUT_MESSAGES_KEY = "input";
@@ -30,7 +31,10 @@ const prompt = ChatPromptTemplate.fromMessages([
 
 const chain = new RunnableWithMessageHistory({
   runnable: prompt.pipe(model),
-  getMessageHistory: (sessionId) => new FirestoreMemory({ firestore, sessionId }),
+  getMessageHistory: (sessionId) => new SmartMemory(
+    new FirestoreMemory({ firestore, sessionId }),
+    process.env.OPENAI_API_KEY ?? "",
+  ),
   historyMessagesKey: HISTORY_MESSAGES_KEY,
   inputMessagesKey: INPUT_MESSAGES_KEY,
 });
