@@ -36,6 +36,7 @@
   "hosting": {
     "site": "seo-chat-assistant",
     "public": "frontend/dist",
+    "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -46,10 +47,6 @@
         "source": "/api/**",
         "function": "api",
         "region": "europe-west1"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
       }
     ]
   }
