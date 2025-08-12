@@ -13,17 +13,25 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    "target": "ES2017",
+    "strictNullChecks": true,
+    "target": "ES2017"
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "dist/types/**/*.ts",
+    "next-env.d.ts"
   ]
 }

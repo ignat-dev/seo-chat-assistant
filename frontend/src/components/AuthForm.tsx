@@ -17,22 +17,22 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   const router = useRouter();
 
   const isPasswordValid = useMemo(
-    () => password && (isSignIn || password.length >= 8),
+    () => password.length > 0 && (isSignIn || password.length >= 8),
     [password]
   );
 
   const showPasswordError = useMemo(
-    () => password && !isPasswordValid,
+    () => password.length > 0 ? !isPasswordValid : undefined,
     [password]
   );
 
   const isRepeatPasswordValid = useMemo(
-    () => isSignIn || (repeatPassword && repeatPassword === password),
+    () => isSignIn || (repeatPassword.length > 0 && repeatPassword === password),
     [repeatPassword]
   );
 
   const showRepeatPasswordError = useMemo(
-    () => !isSignIn && repeatPassword && !isRepeatPasswordValid,
+    () => !isSignIn && repeatPassword.length > 0 ? !isRepeatPasswordValid : undefined,
     [repeatPassword]
   );
 

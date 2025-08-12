@@ -51,7 +51,7 @@ function getApiBaseUrl(): string {
     if (isLocalEnvironment) {
       return joinUrlParts([
         `${protocol}//${hostname}:${process.env.NEXT_PUBLIC_API_SERVER_PORT}`,
-        process.env.NEXT_PUBLIC_API_URL_PREFIX,
+        `${process.env.NEXT_PUBLIC_API_URL_PREFIX}`,
       ]);
     }
   }

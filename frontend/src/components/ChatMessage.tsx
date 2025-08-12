@@ -45,8 +45,8 @@ const ChatMessage = ({ message }: { message: MessageData }) => {
   );
 }
 
-function hasChildrenWithTagNames(node: Element, tagNames: Array<string>): boolean {
-  return node.children.some(x => 'tagName' in x && tagNames.includes(x.tagName));
+function hasChildrenWithTagNames(node: Element | undefined, tagNames: Array<string>): boolean {
+  return node?.children.some(x => 'tagName' in x && tagNames.includes(x.tagName)) ?? false;
 }
 
 export default ChatMessage;
