@@ -19,7 +19,8 @@
     "backend": "*",
     "fastify": "^5.4",
     "firebase-admin": "^13.4",
-    "firebase-functions": "^6.4"
+    "firebase-functions": "^6.4",
+    "langchain": "^0.3"
   },
   "devDependencies": {
     "esbuild": "^0.25"
